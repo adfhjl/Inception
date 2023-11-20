@@ -1,6 +1,6 @@
 services:
   nginx:
-    build: ./nginx/
+    build: ./requirements/nginx/
     container_name: nginx
     networks:
       - inception
@@ -8,26 +8,50 @@ services:
       - "443:443"
       # - "80:80" # TODO: DELETE THIS
     restart: unless-stopped
+    volumes:
+      - wp-vol:/var/www/
     env_file: .env
 
   mariadb:
-    build: ./mariadb/
+    build: ./requirements/mariadb/
     container_name: mariadb
     networks:
       - inception
     restart: unless-stopped
+    volumes:
+      - db-vol:/var/lib/mysql
     env_file: .env
 
   wordpress:
-    build: ./wordpress/
+    build: ./requirements/wordpress/
     container_name: wordpress
-    # required:
-    #   - mariadb
     networks:
       - inception
     restart: unless-stopped
+    volumes:
+      - wp-vol:/var/www/
+    # ports:
+    #   - "9000:9000"
+    # depends_on:
+    #   - mariadb
+    # # restart: unless-stopped
     env_file: .env
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
 networks:
   inception:
     name: inception
+
+volumes:
+  db-vol:
+    driver_opts:
+      o: bind
+      type: none
+      device: ${MARIADB_VOLUME}
+  wp-vol:
+    driver_opts:
+      o: bind
+      type: none
+      device: ${WORDPRESS_VOLUME}

@@ -6,7 +6,6 @@ run:
 
 down:
 	docker compose -f srcs/docker-compose.yaml down
-	docker system prune -af
 
 logs:
 	docker compose -f srcs/docker-compose.yaml logs
@@ -14,5 +13,4 @@ logs:
 clear:
 	docker system prune -af
 
-
-.PHONY: build run down logs
+.PHONY: build run down logs clear
