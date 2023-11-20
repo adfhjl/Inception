@@ -1,7 +1,7 @@
 FROM debian:oldstable
 
 RUN apt-get update && apt-get install -y mariadb-server
-# RUN apt-get install -y curl # TODO: DELETE
+
 RUN mkdir -p /var/run/mysqld; \
 	chmod 777 /var/run/mysqld /var/lib/mysql;
 

@@ -1,12 +1,5 @@
 alias wp="php /home/wp-cli.phar --allow-root --path=/var/www"
 
-# echo "Running 'wp config create'"
-# wp config create \
-# 	--dbhost="$DB_HOST" \
-# 	--dbname="$DB_NAME" \
-# 	--dbuser="$WP_DBUSER" \
-# 	--dbpass="$WP_DBPASS"
-
 rm -fr /var/www/html
 
 # tail -f
